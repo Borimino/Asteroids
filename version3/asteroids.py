@@ -24,6 +24,11 @@ def on_draw():
 
 
 def update(dt):
+    to_add = []
+    for obj in game_objects:
+        obj.update(dt)
+        to_add.extend(obj.new_objects)
+        obj.new_objects = []
     for i in range(len(game_objects)):
         for j in range(i+1, len(game_objects)):
             obj_1 = game_objects[i]
@@ -35,8 +40,7 @@ def update(dt):
     for to_remove in [obj for obj in game_objects if obj.dead]:
         to_remove.delete()
         game_objects.remove(to_remove)
-    for obj in game_objects:
-        obj.update(dt)
+    game_objects.extend(to_add)
 
 
 
