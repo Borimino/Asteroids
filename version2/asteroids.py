@@ -14,6 +14,7 @@ asteroids = load.asteroids(3, player_ship.position, batch=main_batch)
 game_objects = [player_ship] + asteroids
 
 game_window.push_handlers(player_ship)
+game_window.push_handlers(player_ship.key_handler)
 
 @game_window.event
 def on_draw():
@@ -23,6 +24,17 @@ def on_draw():
 
 
 def update(dt):
+    for i in range(len(game_objects)):
+        for j in range(i+1, len(game_objects)):
+            obj_1 = game_objects[i]
+            obj_2 = game_objects[j]
+            if not obj_1.dead and not obj_2.dead:
+                if obj_1.collides_with(obj_2):
+                    obj_1.handle_collision_with(obj_2)
+                    obj_2.handle_collision_with(obj_1)
+    for to_remove in [obj for obj in game_objects if obj.dead]:
+        to_remove.delete()
+        game_objects.remove(to_remove)
     for obj in game_objects:
         obj.update(dt)
 

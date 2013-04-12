@@ -1,10 +1,6 @@
 import pyglet, random, math
 from game import resources, physicalobject
-
-def distance(point_1=(0, 0), point_2=(0, 0)):
-    """Returns the distance between two points"""
-    return math.sqrt((point_1[0]-point_2[0])**2+(point_1[1]-point_2[1])**2)
-
+from game.util import distance
 
 def asteroids(num_asteroids, player_position, batch=None):
     asteroids = []
